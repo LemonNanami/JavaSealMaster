@@ -41,7 +41,6 @@ public class Utils {
 
     public static Det getArea(List<MatOfPoint> contours, int maxIdx, String category) {
         MatOfPoint cnt = contours.get(maxIdx);
-        String cls;
         int bx, by, bw, bh, bt;
 
         if (category.equals("Rectangle")) {
@@ -55,7 +54,6 @@ public class Utils {
             int rw = (int) size.width;
             int rh = (int) size.height;
             int rt = (int) angle;
-            cls = "Rectangle";
             bx = rx;
             by = ry;
             bw = rw;
@@ -70,7 +68,6 @@ public class Utils {
             int cx = (int) center.x;
             int cy = (int) center.y;
             int cr = (int) radius[0];
-            cls = "Circle";
             bx = cx;
             by = cy;
             bw = 2 * cr;
@@ -91,7 +88,6 @@ public class Utils {
                 int et = (int) angle;
                 int ew = 2 * ea;
                 int eh = 2 * eb;
-                cls = "Ellipse";
                 bx = ex;
                 by = ey;
                 bw = ew;
@@ -109,7 +105,6 @@ public class Utils {
                 int et = 0;
                 int ew = 2 * ea;
                 int eh = 2 * eb;
-                cls = "Ellipse";
                 bx = ex;
                 by = ey;
                 bw = ew;
@@ -119,7 +114,7 @@ public class Utils {
         }
 
 
-        return new Det(cls, new Box(bx, by, bw, bh, bt));
+        return new Det(category, new Box(bx, by, bw, bh, bt));
     }
 
     public String filling(Mat image) {
@@ -265,10 +260,6 @@ public class Utils {
         return resImage;
     }
 
-    /**
-     * 对圆和椭圆的旋转文字进行极坐标到直角坐标转换
-     * 默认从正下方开始切，可以通过start设定偏移角度，单位为度
-     */
     public Mat circle2Rectangle(Mat srcImage, double start){
         int x0 = (int) (srcImage.size().height / 2);
         int y0 = (int) (srcImage.size().width / 2);
